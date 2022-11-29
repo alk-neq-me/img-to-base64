@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+	.container__box {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		min-width: 500px;
+	}
+</style>
+
+<div class="container">
+	<div class="container__box border rounded p-3 bg-light">
+		<form method="POST" enctype=multipart/form-data>
+			<div class="input-group mb-3">
+				<div class="custom-file">
+					<input type="file" class="custom-file-input" name="image" id="inputGroupFile04"
+						aria-describedby="inputGroupFileAddon04" onchange="get_name()">
+					<label class="custom-file-label" for="inputGroupFile04" id="fileName">Choose file</label>
+				</div>
+				<div class="input-group-append">
+					<button class="btn btn-outline-secondary" type="submit" id="inputGroupFileAddon04">Convert</button>
+				</div>
+			</div>
+
+			<div class="input-group mb-3">
+				<input disabled type="text" class="form-control" value="{{data64[0:30]}}..." aria-label="Recipient's username"
+					aria-describedby="basic-addon2">
+				<input id="base64Data" class="d-none" type="text" value="{{data64}}" />
+				<div class="input-group-append">
+					<button class="btn btn-outline-secondary" type="button" onclick="copy()" data-toggle="tooltip"
+						data-placement="top" title="copy" id="copyBtn">Copy</button>
+				</div>
+			</div>
+
+		</form>
+	</div>
+</div>
+
+<script>
+	let file_label = document.querySelector("#fileName")
+	let copyBtn = document.querySelector("#copyBtn")
+
+	const get_name = () => {
+		let file = document.querySelector("#inputGroupFile04").files[0].name
+		file_label.innerText = file
+	}
+
+	const copy = () => {
+		let baseText = document.querySelector("#base64Data")
+		baseText.select()
+		baseText.setSelectionRange(0, 99999)
+
+		navigator.clipboard.writeText(baseText.value)
+		copyBtn.classList.remove("btn-outline-secondary")
+		copyBtn.classList.add("btn-secondary")
+		copyBtn.textContent = "Copied"
+		copyBtn.title = "Copied"
+	}
+</script>
+
+{% endblock %}

@@ -10,6 +10,7 @@ packages = [{include = "img_to_base64"}]
 python = "^3.8"
 flask = "^2.2.2"
 strawberry-graphql = {extras = ["debug-server"], version = "^0.142.2"}
+python-dotenv = "^0.21.0"
 
 
 [build-system]
